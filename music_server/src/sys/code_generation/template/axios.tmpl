@@ -1,0 +1,44 @@
+/**
+ * {{.ModuleTitle}}-axios请求接口
+ * @author {{.Author}}
+ * @date {{.Date}}
+ * @moduleName : {{.ModuleName}}
+ */
+
+ import axios from "@/request/index";
+
+//添加部门信息
+  export const add{{.ModuleName}} = (params: any) => {
+    return axios.request({
+      url: "/api/v1/{{toLowerFirst .ModuleName}}/add",
+      method: "post",
+      data: params,
+    });
+  };
+
+//删除部门信息
+   export const drop{{.ModuleName}} = (ids: string[] | number[]) => {
+     return axios.request({
+       url: "/api/v1/{{toLowerFirst .ModuleName}}/dropByIds",
+       method: "delete",
+       data: {ids},
+     });
+   };
+
+//修改部门信息
+    export const edit{{.ModuleName}} = (params: any) => {
+      return axios.request({
+        url: "/api/v1/{{toLowerFirst .ModuleName}}/edit",
+        method: "put",
+        data: params,
+      });
+    };
+
+//分页获取部门列表
+ export const get{{.ModuleName}}List = (params: any) => {
+   return axios.request({
+     url: "/api/v1/{{toLowerFirst .ModuleName}}/page",
+     method: "post",
+     data: params,
+   });
+ };

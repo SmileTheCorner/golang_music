@@ -1,0 +1,56 @@
+/**
+ * {{.ModuleTitle}}-持久层
+ * @author {{.Author}}
+ * @date {{.Date}}
+ * @moduleName : {{.ModuleName}}
+ */
+
+package dao
+
+import (
+ "go_study/src/common"
+    "go_study/src/utils"
+)
+
+type {{.ModuleName}}Dao struct{
+  common.BaseDao
+}
+
+var {{toLowerFirst .ModuleName}}Dao *{{.ModuleName}}Dao
+
+// New{{.ModuleName}}Dao 做成单实列
+func New{{.ModuleName}}Dao() *{{.ModuleName}}Dao {
+ if {{toLowerFirst .ModuleName}}Dao == nil {
+  return &{{.ModuleName}}Dao{
+   common.NewBaseDao(),
+  }
+ }
+ return {{toLowerFirst .ModuleName}}Dao
+}
+
+// Add{{.ModuleName}} 添加{{.ModuleTitle}}数据
+func (m {{.ModuleName}}Dao) Add{{.ModuleName}}(entity entity.{{.ModuleName}}) (int64, error) {
+ tx := New{{.ModuleName}}Dao().Orm.Create(&entity)
+ return tx.RowsAffected, tx.Error
+}
+
+// Drop{{.ModuleName}}ByIds 根据ID切片删除{{.ModuleTitle}}数据
+func (m {{.ModuleName}}Dao) Drop{{.ModuleName}}ByIds(ids []string) (int64, error) {
+  tx := New{{.ModuleName}}Dao().Orm.Delete(&entity.{{.ModuleName}}{}, ids)
+  return tx.RowsAffected, tx.Error
+}
+
+// Update{{.ModuleName}}ById 根据ID更新{{.ModuleTitle}}数据
+func (m {{.ModuleName}}Dao) Update{{.ModuleName}}ById({{.ModuleName}} entity.{{.ModuleName}}) (int64, error) {
+  tx := New{{.ModuleName}}Dao().Orm.Save(&{{.ModuleName}})
+  return tx.RowsAffected, tx.Error
+}
+
+// Query{{.ModuleName}}Page 分页查询{{.ModuleTitle}}数据
+func (m {{.ModuleName}}Dao) Query{{.ModuleName}}Page(page common.Page) ([]entity.{{.ModuleName}},int64,error) {
+  var {{toLowerFirst .ModuleName}} []entity.{{.ModuleName}}
+  var count int64
+  queryMap := utils.PageToObject(&page)
+  tx := New{{.ModuleName}}Dao().Orm.Where(queryMap).Limit(page.PageSize).Offset(page.Offset).Find(&{{toLowerFirst .ModuleName}}).Offset(-1).Limit(-1).Count(&count)
+  return {{.ModuleName}},count,tx.Error
+}

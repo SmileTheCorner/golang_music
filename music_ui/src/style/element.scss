@@ -1,0 +1,37 @@
+.card {
+    box-sizing: border-box;
+    padding: 20px;
+    overflow-x: hidden;
+    background-color: var(--el-bg-color);
+    border: 1px solid var(--el-border-color-light);
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+  }
+  .border-style{
+    box-sizing: border-box;
+    background-color: var(--el-bg-color);
+    border: 1px solid var(--el-border-color-light);
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgb(0 0 0 / 5%);
+  }
+  // table-search 表格搜索样式
+  .table-search {
+      padding: 18px 18px 0;
+      margin-bottom: 10px;
+      .el-form {
+        .el-form-item__content > * {
+          width: 100%;
+        }
+  
+        // 去除时间选择器上下 padding
+        .el-range-editor.el-input__wrapper {
+          padding: 0 10px;
+        }
+      }
+      .operation {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 18px;
+      }
+    }

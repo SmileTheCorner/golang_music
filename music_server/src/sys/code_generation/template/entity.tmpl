@@ -1,0 +1,29 @@
+/**
+ * {{.ModuleTitle}}-实体类
+ * @author {{.Author}}
+ * @date {{.Date}}
+ * @moduleName : {{.ModuleName}}
+ */
+
+ package entity
+
+ import "go_study/src/common"
+
+ type {{.ModuleName}} struct {
+     {{range .Fields}}
+     {{toUpperFirst .COLUMN_NAME}} {{mysqlTypeToGoType .COLUMN_TYPE}} `gorm:"type:{{.COLUMN_TYPE}};comment:{{.COLUMN_COMMENT}}" json:"{{removeUnderline .COLUMN_NAME}}"`
+     {{end}}
+ }
+
+ func ({{.ModuleName}}) TableName() string {
+     {{range $index,$item := .Fields}}
+       {{if eq $index 0}}
+         return {{$item.TABLE_NAME}}
+         {{break}}
+       {{end}}
+     {{end}}
+ }
+
+
+
+

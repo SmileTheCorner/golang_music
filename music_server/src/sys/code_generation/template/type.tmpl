@@ -1,0 +1,12 @@
+/**
+ * {{.ModuleTitle}}-类型
+ * @author {{.Author}}
+ * @date {{.Date}}
+ * @moduleName : {{.ModuleName}}
+ */
+
+ export interface {{.ModuleName}} {
+   {{range .Fields}}
+      {{removeUnderline .COLUMN_NAME}}?:{{mysqlTypeToTsType .COLUMN_TYPE}}
+   {{end}}
+ }

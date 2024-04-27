@@ -1,0 +1,88 @@
+/**
+ * {{.ModuleTitle}}-访问层
+ * @author {{.Author}}
+ * @date {{.Date}}
+ * @moduleName : {{.ModuleName}}
+ */
+
+ package api
+
+ import (
+ 	"github.com/gin-gonic/gin"
+ 	"go_study/src/common"
+ )
+
+ type {{.ModuleName}}Api struct {
+ 	{{toLowerFirst .ModuleName}}Service *service.{{.ModuleName}}Service
+ }
+
+ func New{{.ModuleName}}Api() *{{.ModuleName}}Api {
+ 	return &{{.ModuleName}}Api{
+ 		{{toLowerFirst .ModuleName}}Service: service.New{{.ModuleName}}Service(),
+ 	}
+ }
+
+ // Add{{.ModuleName}} 添加{{.ModuleTitle}}数据
+    func (api *{{.ModuleName}}Api) Add{{.ModuleName}}(ctx *gin.Context) {
+    	var {{toLowerFirst .ModuleName}} entity.{{.ModuleName}}
+    	if err := ctx.ShouldBind(&{{toLowerFirst .ModuleName}}); err != nil {
+    		utils.Fail(ctx, err)
+    		return
+    	}
+    	row,addErr := New{{.ModuleName}}Api().{{toLowerFirst .ModuleName}}Service.Add{{.ModuleName}}(&{{toLowerFirst .ModuleName}})
+    	if addErr != nil {
+    	   utils.Fail(ctx, addErr)
+    	   return
+    	}
+    	utils.Ok(ctx, row)
+    }
+
+ // Drop{{.ModuleName}}ByIds 根据ID切片删除{{.ModuleTitle}}数据
+    func (api *{{.ModuleName}}Api) Drop{{.ModuleName}}ByIds(ctx *gin.Context) {
+    	var ids []string
+    	if err := ctx.ShouldBind(&ids); err != nil {
+    		utils.Fail(ctx, err)
+    		return
+    	}
+    	row,dropErr := New{{.ModuleName}}Api().{{toLowerFirst .ModuleName}}Service.Drop{{.ModuleName}}ByIds(ids)
+    	if dropErr != nil {
+    	   utils.Fail(ctx, dropErr)
+    	   return
+    	}
+    	utils.Ok(ctx, row)
+    }
+
+  // Update{{.ModuleName}}ById 根据ID更新{{.ModuleTitle}}数据
+    func (api *{{.ModuleName}}Api) Update{{.ModuleName}}ById(ctx *gin.Context) {
+    	var {{toLowerFirst .ModuleName}} entity.{{.ModuleName}}
+    	if err := ctx.ShouldBind(&{{toLowerFirst .ModuleName}}); err != nil {
+    		utils.Fail(ctx, err)
+    		return
+    	}
+    	row,updateErr := New{{.ModuleName}}Api().{{.ModuleName}}Service.Update{{.ModuleName}}ById(&{{toLowerFirst .ModuleName}})
+    	if updateErr != nil {
+    	   utils.Fail(ctx, updateErr)
+    	   return
+    	}
+    	utils.Ok(ctx, row)
+    }
+
+  // Query{{.ModuleName}}Page 分页查询{{.ModuleTitle}}数据
+    func (api *{{.ModuleName}}Api) Query{{.ModuleName}}Page(ctx *gin.Context) {
+    	   //获取请求体中的参数
+        	var page common.Page
+        	err := ctx.ShouldBind(&page)
+        	if err != nil {
+        	    utils.Fail(ctx, err)
+        		return
+        	}
+        	list, count, listErr := New{{.ModuleName}}Api().{{toLowerFirst .ModuleName}}Service.Query{{.ModuleName}}Page(&page)
+        	if listErr != nil {
+            	utils.Fail(ctx, listErr)
+            	return
+            }
+            //进行数据的封装
+            mapData := utils.PageData(list, int64(page.PageNum), int64(page.PageSize), count)
+            utils.Ok(ctx, mapData)
+    }
+

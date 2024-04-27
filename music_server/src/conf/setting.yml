@@ -1,0 +1,42 @@
+server:
+  port: "8090"
+
+log:
+  MaxSize: 1 #日志文件最大的存储容量（M),超限将自动进行分割
+  MaxBackups: 10 #保留日志文件的个数
+  MaxAge: 30  #保留日志文件的天数
+
+#mysql数据库配置
+db:
+  mysql: root:QSZqsz456698@tcp(42.194.245.10:3306)/db_music?charset=utf8mb4&parseTime=True&loc=Local
+  maxIdleConns: 10 #最大空闲连接数
+  maxOpenConns: 10 #最大打开连接数
+
+#redis配置
+redis:
+  addr: 42.194.245.10:6379
+  password: QSZqsz456698
+  db: 2
+#jwt配置
+jwt:
+  expire: 30 #jwt过期时间（分钟）
+  secretKey: kgLg
+
+#日志是否开启Debug级别
+logModel:
+  develop: true
+
+#minio配置
+upload:
+  mode: minio
+  minio:
+    endpoint: 42.194.245.10:9000
+    accessKeyId: hOhuvvhwzhjmTDZv
+    secretAccessKey: fbeXgt8Fa05SutT2U2TGaJvxjhcRFdbX
+    secure: false  #是否使用https
+    location: us-east-1
+
+#sm4加密密钥
+sm4:
+  secretKey: 1234567890abcdef
+  iv: qszwdcrdxtgvubge
